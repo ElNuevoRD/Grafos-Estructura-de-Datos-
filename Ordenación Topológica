@@ -1,0 +1,60 @@
+Ejercicio de ordenacion topologica:
+
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static int V; 
+    static List<int>[] grafo; 
+    static List<int> orden; 
+    static bool[] visitado;
+
+    static void dfs(int nodo)
+    {
+        visitado[nodo] = true;
+
+        foreach (int adyacente in grafo[nodo])
+        {
+            if (!visitado[adyacente])
+            {
+                dfs(adyacente);
+            }
+        }
+
+        orden.Insert(0, nodo);
+    }
+
+    static void Main(string[] args)
+    {
+        V = 6;
+        grafo = new List<int>[V];
+        for (int i = 0; i < V; i++)
+        {
+            grafo[i] = new List<int>();
+        }
+
+        grafo[0].Add(1);
+        grafo[0].Add(2);
+        grafo[1].Add(3);
+        grafo[2].Add(3);
+        grafo[3].Add(4);
+        grafo[4].Add(5);
+
+        orden = new List<int>();
+        visitado = new bool[V];
+
+        for (int i = 0; i < V; i++)
+        {
+            if (!visitado[i])
+            {
+                dfs(i);
+            }
+        }
+
+        foreach (int nodo in orden)
+        {
+            Console.Write(nodo + " ");
+        }
+    }
+}
